@@ -22,8 +22,8 @@ export default function FormPage() {
         typeReviewId: Number(formData.get("typeReviewId")),
       });
       router.push("/review");
-    } catch {
-      setError("Ocurrió un error al analizar el código.");
+    } catch (error: any) {
+      setError(error.message || "Ocurrió un error inesperado.");
     } finally {
       setLoading(false);
     }
@@ -60,6 +60,7 @@ export default function FormPage() {
               placeholder="Codigo aqui ->"
             ></textarea>
             {error && <p className="text-red-400 text-sm mt-2">{error}</p>}
+
             <button
               type="submit"
               disabled={loading}

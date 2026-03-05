@@ -18,7 +18,7 @@ export default function ReviewPage() {
   if (!data) return <p className="text-white">Cargando...</p>;
 
   return (
-    <section className="flex flex-col p-8 text-white w-max h-max items-center">
+    <section className="flex flex-col p-8 text-white w-full h-max items-center">
       <div className="mb-6 flex flex-col w-full justify-start">
         <h2 className="text-3xl font-bold">{data.titulo}</h2>
         <h4 className="text-lg text-purple-400 mt-1">
