@@ -1,15 +1,38 @@
-import type { Metadata } from "next";
+"use client";
 
-export const metadata: Metadata = {
-  title: "Formulario",
-  description: "Author: Antonio Selvas, Category: programing",
-};
+import { submitCodeReview } from "@/services/reviewService";
+import { useRouter } from "next/navigation";
+import React, { useState } from "react";
 
 export default function FormPage() {
+  const router = useRouter();
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  async function handleSubmit(e: React.ChangeEvent<HTMLFormElement>) {
+    e.preventDefault();
+    setLoading(true);
+    setError(null);
+
+    const formData = new FormData(e.currentTarget);
+
+    try {
+      await submitCodeReview({
+        code: formData.get("code") as string,
+        typeReviewId: Number(formData.get("typeReviewId")),
+      });
+      router.push("/review");
+    } catch {
+      setError("Ocurrió un error al analizar el código.");
+    } finally {
+      setLoading(false);
+    }
+  }
+
   return (
     <section className="flex flex-col w-max h-max">
       <div className=" rounded-xl w-160 ">
-        <form action="#" className="flex flex-col">
+        <form onSubmit={handleSubmit} className="flex flex-col">
           <div className="flex justify-between items-center">
             <label
               htmlFor=""
@@ -19,14 +42,15 @@ export default function FormPage() {
             </label>
 
             <select
+              name="typeReviewId"
               defaultValue=""
               className="text-base font-medium border border-border-secondary rounded-2xl px-10 py-8 text-foreground bg-background-secondary outline-none h-full "
             >
               <option value="" disabled>
                 Nivel de explicacion
               </option>
-              <option>General</option>
-              <option>Linea a linea</option>
+              <option value="1">General</option>
+              <option value="2">Linea a linea</option>
             </select>
           </div>
           <div className="h-180 shadow-[0_0_24px_rgba(194,39,245)] rounded-xl">
@@ -35,11 +59,13 @@ export default function FormPage() {
               className=" bg-white rounded-xl text-black p-6 block resize-none h-full w-full"
               placeholder="Codigo aqui ->"
             ></textarea>
+            {error && <p className="text-red-400 text-sm mt-2">{error}</p>}
             <button
               type="submit"
-              className="w-full bg-[rgba(194,39,245)] rounded-lg h-10 my-6 font-bold text-lg"
+              disabled={loading}
+              className="w-full bg-[rgba(194,39,245)] rounded-lg h-10 my-6 font-bold text-lg disabled:opacity-50"
             >
-              Explicar
+              {loading ? "Analizando..." : "Explicar"}
             </button>
           </div>
         </form>

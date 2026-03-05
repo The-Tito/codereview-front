@@ -1,12 +1,18 @@
 export interface ReviewResponse {
   titulo: string;
   lenguage: string;
-  ListaDeExplicaciones: ListaDeExplicacione[];
-  errores: null;
+  ListaDeExplicaciones: ExplicacionGeneral[] | ExplicacionLinea[];
+  errores: string | null;
 }
 
-export interface ListaDeExplicacione {
+export interface ExplicacionGeneral {
   seccion: string;
+  explicacion: string;
+  codigo: string;
+}
+
+export interface ExplicacionLinea {
+  linea: string;
   explicacion: string;
   codigo: string;
 }

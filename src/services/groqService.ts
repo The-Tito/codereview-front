@@ -1,5 +1,5 @@
+import promptBuilder from "@/app/api/utils/promptBuilder";
 import { Groq } from "groq-sdk";
-import promptBuilder from "../utils/prompBuilder";
 
 const groq = new Groq({ apiKey: process.env.GROQ_API_KEY });
 
@@ -27,4 +27,5 @@ export default async function getGroqReview(
     stream: true,
     stop: null,
   });
+  return chatCompletion;
 }
