@@ -18,11 +18,11 @@ export default function ReviewPage() {
   if (!data) return <p className="text-white">Cargando...</p>;
 
   return (
-    <section className="p-8 text-white">
-      <div className="mb-6">
+    <section className="flex flex-col p-8 text-white w-max h-max items-center">
+      <div className="mb-6 flex flex-col w-full justify-start">
         <h2 className="text-3xl font-bold">{data.titulo}</h2>
         <h4 className="text-lg text-purple-400 mt-1">
-          Lenguaje: {data.lenguage}
+          Lenguaje: {data.lenguage || "Lenguaje no reconocido"}
         </h4>
       </div>
       <div className="flex flex-col gap-6">
@@ -42,14 +42,14 @@ export default function ReviewPage() {
         ))}
       </div>
       {data.errores && (
-        <div className="mt-6 bg-red-900/40 border border-red-500 rounded-xl p-4">
+        <div className="mt-6 bg-red-900/40 border border-red-500 rounded-xl p-4 w-full">
           <h3 className="font-bold text-red-400 mb-1">Errores detectados:</h3>
           <p>{data.errores}</p>
         </div>
       )}
       <button
-        onClick={() => router.push("/form")}
-        className="mt-8 bg-[rgba(194,39,245)] rounded-lg px-6 py-3 font-bold"
+        onClick={() => router.push("/")}
+        className="mt-8 bg-[rgba(194,39,245)] rounded-lg px-6 py-3 font-bold w-60"
       >
         Analizar otro código
       </button>
