@@ -30,7 +30,7 @@ export default function FormPage() {
   }
 
   return (
-    <section className="flex flex-col w-max h-max">
+    <section className="flex flex-col w-full h-full items-center">
       <div className=" rounded-xl w-160 ">
         <form onSubmit={handleSubmit} className="flex flex-col">
           <div className="flex justify-between items-center">

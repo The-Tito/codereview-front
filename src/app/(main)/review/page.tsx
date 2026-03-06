@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { loadReview } from "@/lib/reviewStorage";
+import { clearReview, loadReview } from "@/lib/reviewStorage";
 import { ReviewResponse } from "@/types/groq/interfaces/review.interface";
 
 export default function ReviewPage() {
@@ -18,7 +18,7 @@ export default function ReviewPage() {
   if (!data) return <p className="text-white">Cargando...</p>;
 
   return (
-    <section className="flex flex-col p-8 text-white w-full h-max items-center">
+    <section className="flex flex-col p-8 text-white w-full h-full items-center">
       <div className="mb-6 flex flex-col w-full justify-start">
         <h2 className="text-3xl font-bold">{data.titulo}</h2>
         <h4 className="text-lg text-purple-400 mt-1">
@@ -48,7 +48,10 @@ export default function ReviewPage() {
         </div>
       )}
       <button
-        onClick={() => router.push("/")}
+        onClick={() => {
+          router.push("/");
+          clearReview();
+        }}
         className="mt-8 bg-[rgba(194,39,245)] rounded-lg px-6 py-3 font-bold w-60"
       >
         Analizar otro código
